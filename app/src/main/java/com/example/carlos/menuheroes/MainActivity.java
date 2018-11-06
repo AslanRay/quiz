@@ -1,6 +1,7 @@
 package com.example.carlos.menuheroes;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,16 @@ public class MainActivity extends AppCompatActivity {
     private Button botonAcerca;
     private Button botonSalir;
 
+    private MediaPlayer reproductor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        reproductor = MediaPlayer.create(this,R.raw.tema);
+        reproductor.setLooping(true);
+        reproductor.start();
 
         botonJuego=(Button) findViewById(R.id.btnJuego);
         botonPuntajes=(Button) findViewById(R.id.btnPuntajes);
@@ -57,5 +64,36 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
+
     }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (reproductor.isPlaying()){
+            reproductor.stop();
+            reproductor.release();
+        }
+    }
+
+    /*continua la musica cuando vuelve entrar a la aplicacion*/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reproductor.start();
+    }
+    /*Detiene la Musica al salir de la aplicacion*/
+    @Override
+    protected void onPause() {
+        super.onPause();
+        reproductor.pause();
+    }
+
+
 }
