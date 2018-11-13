@@ -36,6 +36,8 @@ public class juegoActivity extends AppCompatActivity {
 
     int contador=0;
 
+    private CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class juegoActivity extends AppCompatActivity {
             String text=tiempo.getText().toString();
 
             //El contador va a empezar en cuanto inicie la actividad de jugar, los 30 segundos estan establecidos como 30 * 1000
-            CountDownTimer countDownTimer=new CountDownTimer(30*1000,1000) {
+            countDownTimer=new CountDownTimer(30*1000,1000) {
                 @Override
                 public void onTick(long millis) {
                     tiempo.setText("0:"+(int)(millis/1000));
@@ -182,6 +184,8 @@ public class juegoActivity extends AppCompatActivity {
                 public void onFinish() {
                     tiempo.setText("0:0");
                     intent=new Intent(juegoActivity.this,resultadoActivity.class);
+                    intent.putExtra("SCORE", contador);
+
                     startActivity(intent);
                 }
             }.start();
@@ -288,4 +292,16 @@ public class juegoActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+    protected void onResume() {
+        super.onResume();
+        countDownTimer.start();
+    }
+
+    protected void onPause() {
+        super.onPause();
+        countDownTimer.cancel();
+    }
+
 }
