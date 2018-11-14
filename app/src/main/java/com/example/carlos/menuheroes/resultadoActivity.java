@@ -47,6 +47,12 @@ public class resultadoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void regresarMenu(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.putExtra("RUNNING",running);
+        startActivity(intent);
+    }
+
     //disable return
     public boolean dispatchKeyEvent(KeyEvent event) {
 
