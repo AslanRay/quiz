@@ -186,6 +186,8 @@ public class juegoActivity extends AppCompatActivity {
                     intent=new Intent(juegoActivity.this,resultadoActivity.class);
                     intent.putExtra("SCORE", contador);
 
+                    //Agregamos el resultado del juego a la lista de puntajes
+                    ListaScores.puntajes.add(contador);
                     startActivity(intent);
                 }
             }.start();
