@@ -38,9 +38,11 @@ public class puntajesActivity extends AppCompatActivity {
             @NonNull
             @Override
             //Sobreescribimos getView para poder mostrar el texto en el centro de la pantalla
+            //y con un tamano de letra grande
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView tv = (TextView) super.getView(position, convertView, parent);
                 tv.setGravity(Gravity.CENTER);
+                tv.setTextSize(50);
                 return tv;
             }
         };
