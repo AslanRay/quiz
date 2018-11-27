@@ -36,7 +36,10 @@ public class juegoActivity extends AppCompatActivity {
 
     int contador=0;
 
+    private boolean timerRunning;
     private CountDownTimer countDownTimer;
+    private static final long START_TIME_INMILLIS = 30000;
+    private long timeLeftInMillis = START_TIME_INMILLIS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,134 +69,164 @@ public class juegoActivity extends AppCompatActivity {
         Collections.shuffle(list);
         newQuestion(turn);
 
+        //Iniciamos el reloj
+        startTimer();
 
-
-
-            String text=tiempo.getText().toString();
-
-            //El contador va a empezar en cuanto inicie la actividad de jugar, los 30 segundos estan establecidos como 30 * 1000
-            countDownTimer=new CountDownTimer(30*1000,1000) {
-                @Override
-                public void onTick(long millis) {
-                    tiempo.setText("0:"+(int)(millis/1000));
-
-
-
-                    b_answer1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Revisa si la respuesta es correcta
-                            if(b_answer1.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
-
-                                if(turn<list.size()){
-                                    turn++;
-                                    contador++;
-                                    contadorTextView.setText("Aciertos: "+contador);
-                                    newQuestion(turn);
-                                }
-                                else{
-                                    juegoTerminado=true;
-                                    onFinish();
-                                }
-                            }
-                            else{
-                                juegoTerminado=true;
-                                Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
-                                onFinish();
-                            }
-                        }
-                    });
-
-                    b_answer2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Revisa si la respuesta es correcta
-                            if(b_answer2.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
-
-                                if(turn<list.size()){
-                                    turn++;
-                                    contador++;
-                                    contadorTextView.setText("Aciertos: "+contador);
-                                    newQuestion(turn);
-                                }
-                                else{
-                                    juegoTerminado=true;
-                                    onFinish();
-                                }
-                            }
-                            else{
-                                juegoTerminado=true;
-                                Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
-                                onFinish();
-                            }
-                        }
-                    });
-
-                    b_answer3.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Revisa si la respuesta es correcta
-                            if(b_answer3.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
-
-                                if(turn<list.size()){
-                                    turn++;
-                                    contador++;
-                                    contadorTextView.setText("Aciertos: "+contador);
-                                    newQuestion(turn);
-                                }
-                                else{
-                                    juegoTerminado=true;
-                                    onFinish();
-                                }
-                            }
-                            else{
-                                juegoTerminado=true;
-                                Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
-                                onFinish();
-                            }
-                        }
-                    });
-
-                    b_answer4.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Revisa si la respuesta es correcta
-                            if(b_answer4.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
-
-                                if(turn<list.size()){
-                                    turn++;
-                                    contador++;
-                                    contadorTextView.setText("Aciertos: "+contador);
-                                    newQuestion(turn);
-                                }
-                                else{
-                                    onFinish();
-                                }
-                            }
-                            else{
-                                juegoTerminado=true;
-                                Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
-                                onFinish();
-                            }
-                        }
-                    });
-
+        //Pausamos el reloj o lo reanudados
+        tiempo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(timerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
                 }
-
-                @Override
-                public void onFinish() {
-                    tiempo.setText("0:0");
-                    intent=new Intent(juegoActivity.this,resultadoActivity.class);
-                    intent.putExtra("SCORE", contador);
-
-                    //Agregamos el resultado del juego a la lista de puntajes
-                    ListaScores.puntajes.add(contador);
-                    startActivity(intent);
-                }
-            }.start();
+            }
+        });
 
 
 
+        String text=tiempo.getText().toString();
+
+    }
+
+    private void startTimer() {
+
+        //El contador va a empezar en cuanto inicie la actividad de jugar, los 30 segundos estan establecidos como 30 * 1000
+        countDownTimer=new CountDownTimer(timeLeftInMillis,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                tiempo.setText("0:"+(int)(millisUntilFinished/1000));
+
+
+
+                b_answer1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Revisa si la respuesta es correcta
+                        if(b_answer1.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
+
+                            if(turn<list.size()){
+                                turn++;
+                                contador++;
+                                contadorTextView.setText("Aciertos: "+contador);
+                                newQuestion(turn);
+                            }
+                            else{
+                                juegoTerminado=true;
+                                onFinish();
+                            }
+                        }
+                        else{
+                            juegoTerminado=true;
+                            Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                            onFinish();
+                        }
+                    }
+                });
+
+                b_answer2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Revisa si la respuesta es correcta
+                        if(b_answer2.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
+
+                            if(turn<list.size()){
+                                turn++;
+                                contador++;
+                                contadorTextView.setText("Aciertos: "+contador);
+                                newQuestion(turn);
+                            }
+                            else{
+                                juegoTerminado=true;
+                                onFinish();
+                            }
+                        }
+                        else{
+                            juegoTerminado=true;
+                            Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                            onFinish();
+                        }
+                    }
+                });
+
+                b_answer3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Revisa si la respuesta es correcta
+                        if(b_answer3.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
+
+                            if(turn<list.size()){
+                                turn++;
+                                contador++;
+                                contadorTextView.setText("Aciertos: "+contador);
+                                newQuestion(turn);
+                            }
+                            else{
+                                juegoTerminado=true;
+                                onFinish();
+                            }
+                        }
+                        else{
+                            juegoTerminado=true;
+                            Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                            onFinish();
+                        }
+                    }
+                });
+
+                b_answer4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Revisa si la respuesta es correcta
+                        if(b_answer4.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())){
+
+                            if(turn<list.size()){
+                                turn++;
+                                contador++;
+                                contadorTextView.setText("Aciertos: "+contador);
+                                newQuestion(turn);
+                            }
+                            else{
+                                onFinish();
+                            }
+                        }
+                        else{
+                            juegoTerminado=true;
+                            Toast.makeText(juegoActivity.this,"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                            onFinish();
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFinish() {
+                tiempo.setText("0:0");
+                intent=new Intent(juegoActivity.this,resultadoActivity.class);
+                intent.putExtra("SCORE", contador);
+
+                //Agregamos el resultado del juego a la lista de puntajes
+                ListaScores.puntajes.add(contador);
+                startActivity(intent);
+            }
+        }.start();
+        timerRunning = true;
+        b_answer1.setEnabled(true);
+        b_answer2.setEnabled(true);
+        b_answer3.setEnabled(true);
+        b_answer4.setEnabled(true);
+    }
+
+    private void pauseTimer() {
+        countDownTimer.cancel();
+        b_answer1.setEnabled(false);
+        b_answer2.setEnabled(false);
+        b_answer3.setEnabled(false);
+        b_answer4.setEnabled(false);
+        timerRunning = false;
     }
 
     private void newQuestion(int number){
@@ -296,14 +329,15 @@ public class juegoActivity extends AppCompatActivity {
     }
 
 
-    protected void onResume() {
-        super.onResume();
-        countDownTimer.start();
-    }
-
-    protected void onPause() {
-        super.onPause();
-        countDownTimer.cancel();
-    }
+//
+//    protected void onResume() {
+//        super.onResume();
+//        //countDownTimer.start();
+//    }
+//
+//    protected void onPause() {
+//        super.onPause();
+//        //countDownTimer.cancel();
+//    }
 
 }
