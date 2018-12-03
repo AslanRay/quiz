@@ -35,7 +35,7 @@ public class Database {
             "capitan_america",
             "catwoman",
             "charles_xavier",
-            "drawable.colossus",
+            "colossus",
             "daredevil",
             "deadpool",
             "hulk",
