@@ -28,7 +28,7 @@ public class resultadoActivity extends AppCompatActivity {
         int highScore = setting.getInt("HIGH_SCORE",0);
 
         if (score > highScore){
-            highScoreLabel.setText("HIGH SCORE :" + score);
+            highScoreLabel.setText("Puntaje maximo: " + score);
 
             //SAVE
             SharedPreferences.Editor editor = setting.edit();
@@ -36,7 +36,7 @@ public class resultadoActivity extends AppCompatActivity {
             editor.commit();
         }
         else {
-            highScoreLabel.setText("HIGH SCORE :" + highScore);
+            highScoreLabel.setText("Puntaje maximo: " + highScore);
         }
     }
 

@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="213dp"
-        android:text="Game Over"
+        android:text="Juego terminado"
         android:textSize="45sp" />
 
     <TextView
@@ -43,26 +43,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="190dp"
         android:onClick="tryAgain"
-        android:text="Try Again"
+        android:text="Intentar de nuevo"
         android:textAllCaps="false"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
+        android:layout_width="143dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginRight="148dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="117dp"
         android:onClick="regresarMenu"
-        android:text="Menu"
-        android:textStyle="bold"/>
+        android:text="Regresar al menu"
+        android:textStyle="bold" />
 
 </RelativeLayout>
